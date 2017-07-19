@@ -18,8 +18,8 @@ test = test.reshape(test.shape[0], 200, 13, 1)
 label = utils.to_categorical(label, num_classes=types)
 test_y = utils.to_categorical(test_y, num_classes=types)
 model = get_CNN()
-model.fit(train, label, batch_size=100, nb_epoch=5,
+model.fit(train, label, batch_size=100, nb_epoch=30,
           verbose=1, shuffle=True, validation_data=(test, test_y))
-json_string = model.to_json()
-open('model.json','w').write(json_string)
-model.save_weights('model.h5')
+#json_string = model.to_json()
+#open('model.json','w').write(json_string)
+#model.save_weights('model.h5')

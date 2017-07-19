@@ -2,14 +2,10 @@ import os
 import pandas
 import numpy
 from sklearn import preprocessing
-from sklearn.utils import shuffle
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten
-from keras.layers import Conv2D, MaxPooling2D
-from keras import utils
 from keras.models import model_from_json
 import keras.backend as K
 
+'''
 def load_data(col):
     path = "/media/meng/9079-7B0D/clean_m1/"
     filelist = os.listdir(path)
@@ -42,7 +38,7 @@ def load_data(col):
     label = numpy.array(label)
     #print numpy.shape(label)
     return ret, label
-
+'''
 col = ['Current 1', 'Current 2', 'Current 3', 'Voltage 1', 
 'Voltage 2', 'Voltage 3', 'Accelerometer 1',
        'Accelerometer 2', 'Microphone', 'Tachometer', 'Temperature', 'Output Current', 'Output Voltage']
