@@ -9,6 +9,7 @@ from keras.layers.normalization import BatchNormalization
 from keras.layers.convolutional_recurrent import ConvLSTM2D
 from keras import utils
 
+'''
 def load_data(col):
     path = "/media/meng/9079-7B0D/clean_m1/"
     filelist = os.listdir(path)
@@ -45,8 +46,9 @@ def load_data(col):
 def shuffle_data(data, label):
     X, Y = shuffle(data, label, random_state=0)
     return X, Y
+'''
 
-def get_model():
+def get_LSTM():
     model = Sequential()
     model.add(ConvLSTM2D(filters=10, kernel_size=(2, 2), input_shape=(1, 200, 13, 1), padding='same', return_sequences=True))
     model.add(BatchNormalization())
@@ -62,10 +64,11 @@ def get_model():
     model.add(Dense(200, activation="relu"))
     model.add(Dropout(0.5))
     model.add(Dense(54, activation="relu"))
-    model.add(Dense(18, activation="sigmoid"))
+    model.add(Dense(28, activation="sigmoid"))
     model.compile(loss="binary_crossentropy", optimizer='rmsprop', metrics=['accuracy'])
     return model
 
+'''
 col = ['Current 1', 'Current 2', 'Current 3', 'Voltage 1', 
 'Voltage 2', 'Voltage 3', 'Accelerometer 1',
        'Accelerometer 2', 'Microphone', 'Tachometer', 'Temperature', 'Output Current', 'Output Voltage']
@@ -77,3 +80,4 @@ label = utils.to_categorical(label, num_classes=18)
 model = get_model()
 model.fit(data, label, batch_size=100, nb_epoch=15,
           verbose=1, shuffle=False, validation_split=0.1)
+'''
