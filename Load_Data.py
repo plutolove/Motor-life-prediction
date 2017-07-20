@@ -4,14 +4,17 @@ import numpy as np
 from sklearn import preprocessing
 from sklearn.utils import shuffle
 
-def load_train(col, path):
+def load_train(col, path, num_train):
     print 'load train data from '+path
     dirlist = os.listdir(path)
+    dirlist.sort()
     ret = []
     label = []
     types = 0
     num_files = 0
-    for dirname in dirlist:
+    for i in range(num_train):
+        dirname = dirlist[i]
+        print dirname
         filelist = os.listdir(path + dirname)
         dicit = set()
         for filename in filelist:
@@ -31,13 +34,16 @@ def load_train(col, path):
         if types < len(dicit):
             types = len(dicit)
         num_files = num_files + len(filelist)
+    
     ret = np.asarray(ret, dtype="float32")
-    ret = np.reshape(ret, (num_files * 100, -1))
+    ret = ret.reshape(ret.shape[0], -1)
+    #ret = np.reshape(ret, (num_files * 100, -1))
     min_max_scaler = preprocessing.MinMaxScaler()
     ret = min_max_scaler.fit_transform(ret)
-    ret = np.reshape(ret, (num_files * 100, 200, -1))
+    #ret = np.reshape(ret, (num_files * 100, 200, -1))
+    ret = ret.reshape(ret.shape[0], 200, -1)
     label = np.array(label)
-    return ret, label, types
+    return ret, label
 
 
 def load_test(col, path):
@@ -50,6 +56,7 @@ def load_test(col, path):
     for dirname in dirlist:
         filelist = os.listdir(path + dirname)
         dicit = set()
+        print dirname
         for filename in filelist:
             fullpath = path + dirname + '/'+filename
             #print fullpath
