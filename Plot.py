@@ -20,37 +20,37 @@ with sns.axes_style('darkgrid'):
     plt.subplot(321)
     plt.plot(x, motor1_test_acc)
     plt.title('acc of motor1 test')
-    plt.xlabel('num_motors')
+    plt.xlabel('train_num_motors')
     plt.ylabel('acc')
 
     plt.subplot(322)
     plt.plot(x, motor1_test_loss)
     plt.title('loss of motor1 test')
-    plt.xlabel('num_motors')
+    plt.xlabel('train_num_motors')
     plt.ylabel('loss')
 
     plt.subplot(323)
     plt.plot(x, motor2_test_acc)
     plt.title('acc of motor2 test')
-    plt.xlabel('num_motors')
+    plt.xlabel('train_num_motors')
     plt.ylabel('acc')
 
     plt.subplot(324)
     plt.plot(x, motor2_test_loss)
     plt.title('loss of motor2 test')
-    plt.xlabel('num_motors')
+    plt.xlabel('train_num_motors')
     plt.ylabel('loss')
 
     plt.subplot(325)
     plt.plot(x, motor3_test_acc)
     plt.title('acc of motor3 test')
-    plt.xlabel('num_motors')
+    plt.xlabel('train_num_motors')
     plt.ylabel('acc')
 
     plt.subplot(326)
     plt.plot(x, motor3_test_loss)
     plt.title('loss of motor3 test')
-    plt.xlabel('num_motors')
+    plt.xlabel('train_num_motors')
     plt.ylabel('loss')
     
     plt.subplots_adjust(top=0.92, bottom=0.08, left=0.10, right=0.95, hspace=0.45,
