@@ -1,9 +1,10 @@
 import os
-import pandas
+import pandas as pd
 import numpy
 from sklearn import preprocessing
 from keras.models import model_from_json
 import keras.backend as K
+from Load_Data import load_train, load_test, shuffle_data
 
 '''
 def load_data(col):
@@ -39,16 +40,34 @@ def load_data(col):
     #print numpy.shape(label)
     return ret, label
 '''
-col = ['Current 1', 'Current 2', 'Current 3', 'Voltage 1', 
-'Voltage 2', 'Voltage 3', 'Accelerometer 1',
-       'Accelerometer 2', 'Microphone', 'Tachometer', 'Temperature', 'Output Current', 'Output Voltage']
+col = ['Current 1', 'Current 2', 'Current 3', 'Voltage 1', 'Voltage 2', 'Voltage 3', 'Accelerometer 1', 'Accelerometer 2', 'Microphone', 'Tachometer', 'Temperature', 'Output Current', 'Output Voltage']
+train, label, types = load_train(col, '/media/meng/9079-7B0D/clean_data/train/')
+test, test_y = load_test(col, "/media/meng/9079-7B0D/clean_data/test/")
 
-data, label = load_data(col)
+train, label = shuffle_data(train, label)
+test, test_y = shuffle_data(test, test_y)
+
+#train, label = shuffle_data(train, label)
+
+train = train.reshape(train.shape[0], 200, 13, 1)
+test = test.reshape(test.shape[0], 200, 13, 1)
 
 model = model_from_json(open('model.json').read())
 model.load_weights('model.h5')
 get_feature = K.function([model.layers[0].input, K.learning_phase()], [model.layers[9].output])
-data = data.reshape(data.shape[0], 200, 13, 1)
-feature = get_feature([data, 5])
 
-print numpy.shape(feature)
+test_feature = get_feature([test, 0])
+train_feature = get_feature([train, 0])
+print numpy.shape(test_feature[0])
+
+cols = []
+for i in range(280):
+    cols.append("feature_"+str(i))
+
+test_feature = pd.DataFrame(columns=cols, data=test_feature[0])
+test_feature['label'] = test_y
+test_feature.to_csv('test.csv', index=False)
+
+train_feature = pd.DataFrame(columns=cols, data=train_feature[0])
+train_feature['label'] = label
+train_feature.to_csv("train.csv", index=False)
