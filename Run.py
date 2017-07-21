@@ -4,7 +4,7 @@ from Load_Data import load_train, load_test, shuffle_data
 from keras import utils
 
 col = ['Current 1', 'Current 2', 'Current 3', 'Voltage 1', 'Voltage 2', 'Voltage 3', 'Accelerometer 1', 'Accelerometer 2', 'Microphone', 'Tachometer', 'Temperature', 'Output Current', 'Output Voltage']
-train, label, types = load_train(col, '/media/meng/9079-7B0D/clean_data/train/')
+train, label, types = load_train(col, '/media/meng/9079-7B0D/clean_data/train/', 1)
 test, test_y = load_test(col, "/media/meng/9079-7B0D/clean_data/test/")
 
 train, label = shuffle_data(train, label)
