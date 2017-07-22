@@ -6,7 +6,7 @@ Predict the motor lift with CNN and LSTM.
 >* CNN with linear  
  ![cmd-markdown-logo](cnn_line.png)
 
- >* Motor1 statistical mean and variance
+ >* Motor statistical mean and variance
  ![cmd-markdown-logo](Plot/pic/motor7/0.png)
  ![cmd-markdown-logo](Plot/pic/motor7/1.png)
  ![cmd-markdown-logo](Plot/pic/motor7/2.png)
