@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 
 def get_model():
-    RFR =  RandomForestRegressor(n_estimators=50, criterion="mae", n_jobs=-1)
+    RFR =  RandomForestRegressor(n_estimators=10, max_depth=10, criterion="mae", n_jobs=1)
     return RFR
 
 RFR = get_model()

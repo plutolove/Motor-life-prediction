@@ -47,7 +47,7 @@ def Plot(mean, var, col):
                     wspace=0.45)
             #plt.legend()
             #plt.show()
-            plt.savefig('/home/meng/PyProject/Motor-life-prediction/Plot/pic/motor7/'+col[i]+'.png', dpi=fig.dpi)
+            plt.savefig('/home/meng/PyProject/Motor-life-prediction/Plot/pic/motor7/'+str(i)+'.png', dpi=fig.dpi)
 
 
 col = ['X_Value', 'Current 1', 'Current 2', 'Current 3', 'Voltage 1', 'Voltage 2', 'Voltage 3', 'Accelerometer 1', 'Accelerometer 2', 'Microphone', 'Tachometer', 'Temperature', 'Output Current', 'Output Voltage']
