@@ -41,7 +41,7 @@ def load_data(col):
     return ret, label
 '''
 col = ['Current 1', 'Current 2', 'Current 3', 'Voltage 1', 'Voltage 2', 'Voltage 3', 'Accelerometer 1', 'Accelerometer 2', 'Microphone', 'Tachometer', 'Temperature', 'Output Current', 'Output Voltage']
-train, label, types = load_train(col, '/media/meng/9079-7B0D/clean_data/train/')
+train, label= load_train(col, '/media/meng/9079-7B0D/clean_data/train/', 6)
 test, test_y = load_test(col, "/media/meng/9079-7B0D/clean_data/test/")
 
 train, label = shuffle_data(train, label)
@@ -52,8 +52,8 @@ test, test_y = shuffle_data(test, test_y)
 train = train.reshape(train.shape[0], 200, 13, 1)
 test = test.reshape(test.shape[0], 200, 13, 1)
 
-model = model_from_json(open('model.json').read())
-model.load_weights('model.h5')
+model = model_from_json(open('/home/meng/PyProject/Motor-life-prediction/cnn_line_model/std_model_5.json').read())
+model.load_weights('/home/meng/PyProject/Motor-life-prediction/cnn_line_model/std_model_5.h5')
 get_feature = K.function([model.layers[0].input, K.learning_phase()], [model.layers[9].output])
 
 test_feature = get_feature([test, 0])
@@ -66,8 +66,8 @@ for i in range(280):
 
 test_feature = pd.DataFrame(columns=cols, data=test_feature[0])
 test_feature['label'] = test_y
-test_feature.to_csv('test.csv', index=False)
+test_feature.to_csv('/home/meng/PyProject/Motor-life-prediction/feature_data/test.csv', index=False)
 
 train_feature = pd.DataFrame(columns=cols, data=train_feature[0])
 train_feature['label'] = label
-train_feature.to_csv("train.csv", index=False)
+train_feature.to_csv("/home/meng/PyProject/Motor-life-prediction/feature_data/train.csv", index=False)

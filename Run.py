@@ -1,3 +1,4 @@
+'''
 from CNN import get_CNN
 #from LSTM import get_LSTM
 from Load_Data import load_train, load_test, shuffle_data
@@ -23,3 +24,10 @@ model.fit(train, label, batch_size=100, nb_epoch=5,
 json_string = model.to_json()
 open('model.json','w').write(json_string) 
 model.save_weights('model.h5')
+'''
+
+from CNN_Linear import run_cnn_linear
+from Std_model import run_std
+
+run_cnn_linear()
+run_std()
