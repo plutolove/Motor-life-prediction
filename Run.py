@@ -29,5 +29,7 @@ model.save_weights('model.h5')
 from CNN_Linear import run_cnn_linear
 from Std_model import run_std
 
+'''
 run_cnn_linear()
 run_std()
+'''

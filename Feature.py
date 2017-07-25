@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-import numpy
+import numpy as np
 from sklearn import preprocessing
 from keras.models import model_from_json
 import keras.backend as K
@@ -45,20 +45,26 @@ train, label= load_train(col, '/media/meng/9079-7B0D/clean_data/train/', 6)
 test, test_y = load_test(col, "/media/meng/9079-7B0D/clean_data/test/")
 
 train, label = shuffle_data(train, label)
-test, test_y = shuffle_data(test, test_y)
+#test, test_y = shuffle_data(test, test_y)
 
 #train, label = shuffle_data(train, label)
 
 train = train.reshape(train.shape[0], 200, 13, 1)
 test = test.reshape(test.shape[0], 200, 13, 1)
 
-model = model_from_json(open('/home/meng/PyProject/Motor-life-prediction/cnn_line_model/std_model_5.json').read())
-model.load_weights('/home/meng/PyProject/Motor-life-prediction/cnn_line_model/std_model_5.h5')
-get_feature = K.function([model.layers[0].input, K.learning_phase()], [model.layers[9].output])
+model = model_from_json(open('/home/meng/PyProject/Motor-life-prediction/classify/model.json').read())
+model.load_weights('/home/meng/PyProject/Motor-life-prediction/classify/model.h5')
 
+
+'''
+predict_ret = pd.DataFrame({'predicit': test_y})
+predict_ret.to_csv("/home/meng/PyProject/Motor-life-prediction/feature_data/label.csv", index=False)
+'''
+
+
+get_feature = K.function([model.layers[0].input, K.learning_phase()], [model.layers[9].output])
 test_feature = get_feature([test, 0])
 train_feature = get_feature([train, 0])
-print numpy.shape(test_feature[0])
 
 cols = []
 for i in range(280):
@@ -66,8 +72,8 @@ for i in range(280):
 
 test_feature = pd.DataFrame(columns=cols, data=test_feature[0])
 test_feature['label'] = test_y
-test_feature.to_csv('/home/meng/PyProject/Motor-life-prediction/feature_data/test.csv', index=False)
+test_feature.to_csv('/home/meng/PyProject/Motor-life-prediction/feature_data/test2.csv', index=False)
 
 train_feature = pd.DataFrame(columns=cols, data=train_feature[0])
 train_feature['label'] = label
-train_feature.to_csv("/home/meng/PyProject/Motor-life-prediction/feature_data/train.csv", index=False)
+train_feature.to_csv("/home/meng/PyProject/Motor-life-prediction/feature_data/train2.csv", index=False)

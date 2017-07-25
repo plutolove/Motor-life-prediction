@@ -6,6 +6,8 @@ from sklearn.utils import shuffle
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
+from keras import utils
+from Load_Data import load_test, load_train, shuffle_data
 
 def get_CNN():
     model = Sequential()
@@ -29,16 +31,22 @@ def get_CNN():
     model.compile(loss="binary_crossentropy", optimizer='rmsprop', metrics=['accuracy'])
     return model
 
-'''
+
 col = ['Current 1', 'Current 2', 'Current 3', 'Voltage 1', 
 'Voltage 2', 'Voltage 3', 'Accelerometer 1',
        'Accelerometer 2', 'Microphone', 'Tachometer', 'Temperature', 'Output Current', 'Output Voltage']
 
-data, label = load_data(col)
+data, label = load_train(col, '/media/meng/9079-7B0D/clean_data/train/', 6)
 data, label = shuffle_data(data, label)
+test, test_y = load_test(col, '/media/meng/9079-7B0D/clean_data/test/')
 data = data.reshape(data.shape[0], 200, 13, 1)
-label = utils.to_categorical(label, num_classes=18)
-model = get_model()
-model.fit(data, label, batch_size=100, nb_epoch=300,
-          verbose=1, shuffle=True, validation_split=0.3)
-'''
+test = test.reshape(test.shape[0], 200, 13, 1)
+test_y = utils.to_categorical(test_y, num_classes=28)
+label = utils.to_categorical(label, num_classes=28)
+model = get_CNN()
+model.fit(data, label, batch_size=200, nb_epoch=5,
+          verbose=1, shuffle=True, validation_data=(test, test_y))
+
+json_string = model.to_json()
+open('/home/meng/PyProject/Motor-life-prediction/classify/model.json','w').write(json_string) 
+model.save_weights('/home/meng/PyProject/Motor-life-prediction/classify/model.h5')
