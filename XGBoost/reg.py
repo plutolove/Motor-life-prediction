@@ -3,27 +3,18 @@ from Load_Data import load_data
 import numpy as np
 import pandas as pd
 
-train_path = '/home/meng/PyProject/Motor-life-prediction/feature_data/train2.csv'
-test_path = '/home/meng/PyProject/Motor-life-prediction/feature_data/test2.csv'
+train_path = '/home/meng/PyProject/Motor-life-prediction/feature_data/autoencode_train.csv'
+test_path = '/home/meng/PyProject/Motor-life-prediction/feature_data/autoencode_test.csv'
 train_x, train_y = load_data(train_path)
 test_x, test_y = load_data(test_path)
 
-xgboost_params = { 
-   "objective": "reg:linear",
-   "booster": "gbtree",
-   "eval_metric": "auc",
-   "eta": 0.01, # 0.06, #0.01,
-   #"min_child_weight": 240,
-   "subsample": 0.75,
-   "colsample_bytree": 0.68,
-   "max_depth": 7
-}
+pd.DataFrame({'label': test_y}).to_csv('/home/meng/PyProject/Motor-life-prediction/feature_data/new_label.csv', index=False)
 
 #train = xgb.DMatrix(train_x, train_y)
 #test = xgb.DMatrix(test_x)
 # 0.5
 reg = xgb.XGBRegressor(objective="reg:linear", 
-booster='gbtree', subsample=0.3, colsample_bylevel=0.4, max_depth=8, n_estimators=100)
+booster='gbtree', subsample=0.5, colsample_bylevel=0.1, max_depth=8, n_estimators=200)
 
 
 reg.fit(train_x, train_y, eval_metric='mae', verbose = True, eval_set = [(test_x,test_y)], early_stopping_rounds=5)
